@@ -1,10 +1,7 @@
-package com.example.rabbitmq
+package com.example.rabbitmq.hellomq
 
-import com.rabbitmq.client.Channel
-import com.rabbitmq.client.Connection
+import com.example.rabbitmq.RabbitmqApplication
 import com.rabbitmq.client.ConnectionFactory
-import com.rabbitmq.client.DeliverCallback
-import com.rabbitmq.client.Delivery
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import java.nio.charset.StandardCharsets

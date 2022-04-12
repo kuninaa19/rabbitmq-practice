@@ -1,5 +1,6 @@
-package com.example.rabbitmq
+package com.example.rabbitmq.hellomq
 
+import com.example.rabbitmq.RabbitmqApplication
 import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
