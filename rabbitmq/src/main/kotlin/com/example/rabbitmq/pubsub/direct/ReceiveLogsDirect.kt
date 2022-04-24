@@ -1,4 +1,4 @@
-package com.example.rabbitmq.pubsub
+package com.example.rabbitmq.pubsub.direct
 
 import com.example.rabbitmq.RabbitmqApplication
 import com.rabbitmq.client.*
@@ -8,11 +8,11 @@ import java.nio.charset.StandardCharsets
 
 
 @SpringBootApplication
-class ReceiveLogs
+class ReceiveLogsDirect
 
 fun main(args: Array<String>) {
 
-    val exchangeName: String = "logs";
+    val exchangeName: String = "direct_logs";
 
     runApplication<RabbitmqApplication>(*args)
 
@@ -24,17 +24,23 @@ fun main(args: Array<String>) {
     val connection: Connection = factory.newConnection()
     val channel: Channel = connection.createChannel()
 
-    channel.exchangeDeclare(exchangeName, "fanout")
-    /** @Desc no params queueDeclare()
-     *  create non-durable, exclusive, auto delete queue */
+    channel.exchangeDeclare(exchangeName, "direct")
     val queueName: String = channel.queueDeclare().queue
-    channel.queueBind(queueName, exchangeName, "")
 
-    println(" [*] Waiting for messages. To exit press CTRL+C")
+    if (args.isEmpty()) {
+        System.err.println("Usage: ReceiveLogsDirect [info] [warning] [error]");
+        System.exit(1);
+    }
+
+    /** @Desc 특정한 값에 해당하는 데이터만 받도록 routingKey 설정 */
+    for (severity in args) {
+        channel.queueBind(queueName, exchangeName, severity)
+    }
+    println(" [*] Waiting for messages. To exit press CTRL+C");
 
     val deliverCallback = DeliverCallback { consumerTag: String?, delivery: Delivery ->
         val message = String(delivery.body, StandardCharsets.UTF_8)
-        println(" [x] Received '$message'")
+        println(" [x] Received '" + delivery.envelope.routingKey + "':'" + message + "'");
     }
     channel.basicConsume(queueName, true, deliverCallback) { consumerTag -> }
 

@@ -1,4 +1,4 @@
-package com.example.rabbitmq.pubsub
+package com.example.rabbitmq.pubsub.fanout
 
 import com.example.rabbitmq.RabbitmqApplication
 import com.rabbitmq.client.ConnectionFactory

@@ -1,4 +1,4 @@
-package com.example.rabbitmq.routing
+package com.example.rabbitmq.pubsub.direct
 
 import com.example.rabbitmq.RabbitmqApplication
 import com.rabbitmq.client.ConnectionFactory
