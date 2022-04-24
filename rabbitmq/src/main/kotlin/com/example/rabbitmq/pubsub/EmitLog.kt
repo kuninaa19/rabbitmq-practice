@@ -21,6 +21,10 @@ fun main(args: Array<String>) {
 
     factory.newConnection().use { connection ->
         connection.createChannel().use { channel ->
+            /** @desc Exchange
+             * An exchange is a very simple thing.
+             * On one side it receives messages from producers and the other side it pushes them to queues.
+             * The exchange must know exactly what to do with a message it receives*/
             channel.exchangeDeclare(exchangeName, "fanout")
             val message =
                 if (args.isEmpty()) "info: Hello World!" else args.joinToString(" ")

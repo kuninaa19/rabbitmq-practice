@@ -25,6 +25,8 @@ fun main(args: Array<String>) {
     val channel: Channel = connection.createChannel()
 
     channel.exchangeDeclare(exchangeName, "fanout")
+    /** @Desc no params queueDeclare()
+     *  create non-durable, exclusive, auto delete queue */
     val queueName: String = channel.queueDeclare().queue
     channel.queueBind(queueName, exchangeName, "")
 
